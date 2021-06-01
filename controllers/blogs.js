@@ -4,9 +4,6 @@ const faker = require("faker");
 const Model = Blog;
 
 const blog_get_all = (req, res) => {
-  // #swagger.tags = ['Blogs']
-  // #swagger.produces = ['application/json']
-
   Model.find()
     .then((result) => res.send(result))
     .catch((err) => {
@@ -16,10 +13,9 @@ const blog_get_all = (req, res) => {
 };
 
 const blog_add = (req, res) => {
-  // #swagger.tags = ['Blogs']
-  // #swagger.produces = ['application/json']
-
+  global.console.log(req);
   const blog = new Model(req.body);
+
   blog
     .save()
     .then((result) => {
@@ -33,9 +29,6 @@ const blog_add = (req, res) => {
 };
 
 const blog_add_test = (req, res) => {
-  // #swagger.tags = ['Blogs']
-  // #swagger.produces = ['application/json']
-
   const blog = new Model({
     title: faker.name.title(),
     snippet: faker.hacker.phrase(),
@@ -53,9 +46,6 @@ const blog_add_test = (req, res) => {
 };
 
 const blog_get_one = (req, res) => {
-  // #swagger.tags = ['Blogs']
-  // #swagger.produces = ['application/json']
-
   const id = req.params.id;
   global.console.log(id);
   Model.findById(id)
@@ -69,9 +59,6 @@ const blog_get_one = (req, res) => {
 };
 
 const blog_delete = (req, res) => {
-  // #swagger.tags = ['Blogs']
-  // #swagger.produces = ['application/json']
-
   Model.findByIdAndDelete(req.params.id)
     .then((result) => res.send({ message: `${req.params.id} Deleted!` }))
     .catch((err) => {
@@ -81,13 +68,13 @@ const blog_delete = (req, res) => {
 };
 
 const blog_update = (req, res) => {
-  // #swagger.tags = ['Blogs']
-  // #swagger.produces = ['application/json']
-
   const id = req.params.id;
 
   Model.updateOne({ _id: id }, req.body, (err) => global.console.log(err))
-    .then((result) => res.send(result.n > 0))
+    .then((result) => {
+      res.send(result.n > 0);
+      global.console.log(result);
+    })
     .catch((err) => {
       global.console.log(err);
       res.send({ message: "internal Server Error" });
