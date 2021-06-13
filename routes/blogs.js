@@ -4,6 +4,7 @@ const blogController = require("../controllers/blogs");
 // const { authenticate } = require("../middleware/auth");
 
 router.get("/", blogController.blog_get_all);
+// router.get("/", (req, res) => res.render("blogs"));
 
 router.post("/", blogController.blog_add);
 

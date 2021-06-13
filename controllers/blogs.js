@@ -5,7 +5,7 @@ const Model = Blog;
 
 const blog_get_all = (req, res) => {
   Model.find()
-    .then((result) => res.send(result))
+    .then((result) => res.render("blogs", { blogs: result }))
     .catch((err) => {
       global.console.log(err);
       res.send({ message: "Internal Server Error" });
@@ -20,11 +20,12 @@ const blog_add = (req, res) => {
     .save()
     .then((result) => {
       global.console.log(result);
-      res.send(result);
+      res.status(201).send(result);
+      // res.send(result);
     })
     .catch((err) => {
       global.console.log(err);
-      res.send({ message: "internal Server Error" });
+      res.status(500).send({ message: "internal Server Error" });
     });
 };
 
@@ -50,7 +51,8 @@ const blog_get_one = (req, res) => {
   global.console.log(id);
   Model.findById(id)
     .then((result) => {
-      res.send(result);
+      if (!result) res.status(404).send({ message: "not found" });
+      else res.send(result);
     })
     .catch((err) => {
       global.console.log(err);
