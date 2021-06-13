@@ -74,7 +74,7 @@ const blog_update = (req, res) => {
 
   Model.updateOne({ _id: id }, req.body, (err) => global.console.log(err))
     .then((result) => {
-      res.send(result.n > 0);
+      res.redirect("/blogs");
       global.console.log(result);
     })
     .catch((err) => {
