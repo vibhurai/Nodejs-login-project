@@ -13,14 +13,14 @@ const blog_get_all = (req, res) => {
 };
 
 const blog_add = (req, res) => {
-  global.console.log(req);
+  global.console.log(req.body);
   const blog = new Model(req.body);
 
   blog
     .save()
     .then((result) => {
       global.console.log(result);
-      res.status(201).send(result);
+      res.status(201).redirect("/blogs");
       // res.send(result);
     })
     .catch((err) => {
@@ -38,7 +38,7 @@ const blog_add_test = (req, res) => {
   blog
     .save()
     .then((result) => {
-      res.send(result);
+      res.redirect("/blogs");
     })
     .catch((err) => {
       global.console.log(err);
@@ -62,7 +62,7 @@ const blog_get_one = (req, res) => {
 
 const blog_delete = (req, res) => {
   Model.findByIdAndDelete(req.params.id)
-    .then((result) => res.send({ message: `${req.params.id} Deleted!` }))
+    .then((result) => res.redirect("/blogs"))
     .catch((err) => {
       global.console.log(err);
       res.send({ message: "internal Server Error" });

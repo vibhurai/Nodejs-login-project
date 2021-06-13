@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const flash = require("connect-flash");
 const session = require("express-session");
-
+const methodOverride = require("method-override");
 const app = express();
 
 // Passport Config
@@ -23,6 +23,7 @@ app.use(express.json());
 // EJS
 app.use(expressLayouts);
 app.set("view engine", "ejs");
+app.use(methodOverride("_method"));
 
 // Express body parser
 app.use(express.urlencoded({ extended: true }));

@@ -15,14 +15,13 @@
 
     <style>
       body {
-        background-image: url("https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
-        background-size: 100%;
+        background-color: darkslategray;
+        /* background-image: url("https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
+        background-size: 100%; */
       }
     </style>
   </head>
   <body>
-    <!-- Optional JavaScript; choose one of the two! -->
-
     <!-- CARD -->
     <!-- <div class="container">
       <% for(var i=0; i < blogs.length; i++) { %>
@@ -43,6 +42,18 @@
 
     <!-- ACCORDIAN -->
     <div class="container">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button
+          type="button"
+          class="btn btn-warning"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          data-bs-whatever="@kaustubh"
+        >
+          Create Blog
+        </button>
+      </div>
+      <br />
       <div id="accordion">
         <% for(var i=0; i < blogs.length; i++) { %>
         <div class="card">
@@ -71,8 +82,20 @@
               <h5 class="card-title"><%= blogs[i].snippet %></h5>
               <p class="card-text"><%= blogs[i].body %></p>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="button" class="btn btn-secondary">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    data-bs-whatever="@kaustubh"
+                  >
+                    Edit
+                  </button>
+                </div>
+                <form method="POST" action="/blogs/<%= blogs[i]._id %>?_method=DELETE">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
               </div>
             </div>
           </div>
@@ -82,6 +105,113 @@
       </div>
     </div>
 
+    <!-- MODAL LAYOUT -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New blog</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/blogs" method="POST">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input name="title" type="text" class="form-control" />
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"
+                  >Snippet</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="snippet"
+                  id="exampleInputPassword1"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label"
+                  >Body</label
+                >
+                <textarea
+                  name="body"
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATCH -->
+    <div
+      class="modal fade"
+      id="patchModal"
+      tabindex="-1"
+      aria-labelledby="patchModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="patchModalLabel">New blog</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/blogs" method="POST">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input name="title" type="text" class="form-control" />
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"
+                  >Snippet</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="snippet"
+                  id="exampleInputPassword1"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label"
+                  >Body</label
+                >
+                <textarea
+                  name="body"
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
